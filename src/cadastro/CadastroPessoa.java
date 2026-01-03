@@ -1,7 +1,7 @@
 package cadastro;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.BufferedWriter; //biblioteca para salvar arquivo
+import java.io.FileWriter; //biblioteca para salvar arquivo
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;

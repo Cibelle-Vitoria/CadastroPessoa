@@ -10,7 +10,7 @@ public class Aluno extends Pessoa {
     }
 
     @Override
-    public String getTipo() {
+    public String funcao() {
         return "Aluno";
     }
 

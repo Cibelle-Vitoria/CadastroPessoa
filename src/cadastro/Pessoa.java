@@ -10,7 +10,7 @@ public abstract class Pessoa {
         this.idade = idade;
     }
 
-    public abstract String getTipo();
+    public abstract String funcao();
 
     public String getNome() {
         return nome;
@@ -29,6 +29,6 @@ public abstract class Pessoa {
     }
 
     public String toArquivo() {
-        return getTipo() + ";" + nome + ";" + idade;
+        return funcao() + ";" + nome + ";" + idade;
     }
 }
