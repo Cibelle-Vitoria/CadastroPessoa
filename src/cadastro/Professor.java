@@ -8,6 +8,13 @@ public class Professor extends Pessoa {
         super(nome, idade);
         this.disciplina = disciplina;
     }
+    public String getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(String disciplina) {
+        this.disciplina = disciplina;
+    }
 
     @Override
     public String funcao() {
@@ -15,8 +22,7 @@ public class Professor extends Pessoa {
     }
 
     @Override
-    public String toArquivo() {
-        return super.toArquivo() + ";" + disciplina;
+    public String formatarParaArquivo() {
+        return "Professor;" + getNome() + ";" + getIdade() + ";" + this.disciplina;
     }
 }
-

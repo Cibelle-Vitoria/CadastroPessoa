@@ -28,7 +28,6 @@ public abstract class Pessoa {
         this.idade = idade;
     }
 
-    public String toArquivo() {
-        return funcao() + ";" + nome + ";" + idade;
-    }
+    public abstract String formatarParaArquivo();
 }
+

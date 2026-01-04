@@ -1,2 +1,1 @@
-Aluno;cibelle;20;2963
-Professor;bia;90;mtm
+Professor;Samy;20;Matemática
