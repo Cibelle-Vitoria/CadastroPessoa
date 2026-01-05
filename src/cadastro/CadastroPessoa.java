@@ -1,28 +1,30 @@
 package cadastro;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
-import java.io.*;
+import javax.swing.*; // importar os componentes JFrame JButton JLabel JTextArea JOptionPane
+import java.awt.*; //FlowLayout
+import java.awt.event.*;//ActionListener ActionEvent
+import java.util.ArrayList;//ArrayList
+import java.io.*; //FileWriter PrintWriter IOException
 
-public class CadastroPessoa extends JFrame {
+public class CadastroPessoa extends JFrame {  //classe principal da interface
 
-    private JLabel lblTipo, lblNome, lblIdade, lblInfo;
-    private JTextField txtNome, txtIdade, txtInfo;
-    private JRadioButton rbAluno, rbProfessor;
-    private ButtonGroup grupo;
-    private JButton btnCadastrar, btnListar, btnAlterar, btnExcluir, btnSalvar;
-    private JTextArea area;
 
-    private ArrayList<Pessoa> pessoas = new ArrayList<>();
+//declaração dos componentes da interface
+    private JLabel lblTipo, lblNome, lblIdade, lblInfo;//títulos do texto //info -> campo de texto que vai guardadr matrícula ou disciplina
+    private JTextField txtNome, txtIdade, txtInfo; //campos para digitar texto
+    private JRadioButton rbAluno, rbProfessor; // o usuário vai escolher uma opção
+    private ButtonGroup grupo; // vai agrupar os JRadiobutton e permitir que só um fique marcado
+    private JButton btnCadastrar, btnListar, btnAlterar, btnExcluir, btnSalvar; //ação
+    private JTextArea area; //area para exibir a lista
 
-    public CadastroPessoa() {
+    private ArrayList<Pessoa> pessoas = new ArrayList<>(); //Lista que armazena Aluno e Professor
 
-        super("Cadastro de Pessoas");
-        setLayout(new FlowLayout());
+    public CadastroPessoa() { //O construtor é responsável por inicializar a interface gráfica, criando e configurando todos os componentes da janela
 
-        // Tipo
+        super("Cadastro de Pessoas"); //título
+        setLayout(new FlowLayout()); //organizar
+
+
         lblTipo = new JLabel("Tipo:");
         rbAluno = new JRadioButton("Aluno");
         rbProfessor = new JRadioButton("Professor");
@@ -35,7 +37,7 @@ public class CadastroPessoa extends JFrame {
         add(rbAluno);
         add(rbProfessor);
 
-        // Nome
+        // criar componente e adicionar a janela
         lblNome = new JLabel("Nome:");
         txtNome = new JTextField(15);
         add(lblNome);
@@ -72,34 +74,36 @@ public class CadastroPessoa extends JFrame {
         add(new JScrollPane(area));
 
         // CADASTRAR
-        btnCadastrar.addActionListener(new ActionListener() {
+        btnCadastrar.addActionListener(new ActionListener() { //evento vai rodar quando o botão for clicado
             public void actionPerformed(ActionEvent e) {
-
+                    //faz leitura do que for digitado
                 String nome = txtNome.getText();
                 String idadeTxt = txtIdade.getText();
 
+               //evita erro se o campo ficar vazio
                 if (nome.isEmpty() || idadeTxt.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Preencha nome e idade.");
                     return;
                 }
-
+                  //coverte texto em número
                 int idade = Integer.parseInt(idadeTxt);
 
+                //Cria objetos diferentes usando a mesma lista/polimorfismo  o usuário escolheu aluno ou professor, vai criar aluno ou professor e adicionar lista de pessoas
                 if (rbAluno.isSelected()) {
-                    pessoas.add(new Aluno(nome, idade, txtInfo.getText()));
+                    pessoas.add(new Aluno(nome, idade, txtInfo.getText())); //verifica seleção se está marcado ou não, vai criar objeto aluno ou professor e adicionar a lista pessoas
                 } else if (rbProfessor.isSelected()) {
                     pessoas.add(new Professor(nome, idade, txtInfo.getText()));
                 } else {
-                    JOptionPane.showMessageDialog(null, "Selecione Aluno ou Professor.");
+                    JOptionPane.showMessageDialog(null, "Selecione Aluno ou Professor."); //vai mostrar a janela pronta no centro da tela
                     return;
                 }
-
+           //Esse trecho exibe no JTextArea as informações do último cadastro realizado, utilizando dados armazenados naArrayList.
                 area.append(
                         (pessoas.size() - 1) + " - " +
                                 pessoas.get(pessoas.size() - 1).funcao() +
                                 " | " + nome + "\n"
                 );
-
+              //limpar interface
                 txtNome.setText("");
                 txtIdade.setText("");
                 txtInfo.setText("");
@@ -108,6 +112,7 @@ public class CadastroPessoa extends JFrame {
         });
 
         // LISTAR
+        //percorre a lista de pessoas cadastradas e exibe no JTextArea o índice, o tipo e o nome de cada registro ao clicar no botão Listar.
         btnListar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 area.setText("");
@@ -119,6 +124,7 @@ public class CadastroPessoa extends JFrame {
         });
 
         // ALTERAR
+        //solicita o índice do registro a ser alterado, recupera o objeto correspondente da ArrayList e atualiza seus dados utilizando métodos setters, conforme os conceitos de encapsulamento e collections
         btnAlterar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
