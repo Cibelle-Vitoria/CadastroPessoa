@@ -10,7 +10,7 @@ public class CadastroPessoa extends JFrame {  //classe principal da interface
 
 
 //declaração dos componentes da interface
-    private JLabel lblTipo, lblNome, lblIdade, lblInfo;//títulos do texto //info -> campo de texto que vai guardadr matrícula ou disciplina
+    private JLabel lblTipo, lblNome, lblIdade, lblInfo;//títulos do texto //info -> campo de texto que vai guardar matrícula ou disciplina
     private JTextField txtNome, txtIdade, txtInfo; //campos para digitar texto
     private JRadioButton rbAluno, rbProfessor; // o usuário vai escolher uma opção
     private ButtonGroup grupo; // vai agrupar os JRadiobutton e permitir que só um fique marcado
@@ -23,13 +23,13 @@ public class CadastroPessoa extends JFrame {  //classe principal da interface
 
         super("Cadastro de Pessoas"); //título
         setLayout(new FlowLayout()); //organizar
+//identificação btn -> jbutton, txt -> JTextField, rb ->JRadioButton, lbl->label
 
-
-        lblTipo = new JLabel("Tipo:");
-        rbAluno = new JRadioButton("Aluno");
+        lblTipo = new JLabel("Tipo:"); //texto fixo na tela
+        rbAluno = new JRadioButton("Aluno");  //rbAluno e rbProfessor são aqueles botões redondos pro usuário escolher
         rbProfessor = new JRadioButton("Professor");
 
-        grupo = new ButtonGroup();
+        grupo = new ButtonGroup(); //criar o buttongroup para o  usuário escolher apenas uma opção
         grupo.add(rbAluno);
         grupo.add(rbProfessor);
 
@@ -38,10 +38,10 @@ public class CadastroPessoa extends JFrame {  //classe principal da interface
         add(rbProfessor);
 
         // criar componente e adicionar a janela
-        lblNome = new JLabel("Nome:");
+        lblNome = new JLabel("Nome:"); //usuário digita o nome
         txtNome = new JTextField(15);
         add(lblNome);
-        add(txtNome);
+        add(txtNome); //adiciona a tela
 
         // Idade
         lblIdade = new JLabel("Idade:");
@@ -56,7 +56,7 @@ public class CadastroPessoa extends JFrame {  //classe principal da interface
         add(txtInfo);
 
         // Botões
-        btnCadastrar = new JButton("Cadastrar");
+        btnCadastrar = new JButton("Cadastrar");//botão clicável e o texto que vai aparecer nele
         btnListar = new JButton("Listar");
         btnAlterar = new JButton("Alterar");
         btnExcluir = new JButton("Excluir");
@@ -70,8 +70,8 @@ public class CadastroPessoa extends JFrame {  //classe principal da interface
 
         // Área
         area = new JTextArea(10, 35);
-        area.setEditable(false);
-        add(new JScrollPane(area));
+        area.setEditable(false); //Impede que o usuário clique lá dentro e apague os nomes manualmente. A lista só muda através dos botões.
+        add(new JScrollPane(area));//barras de rolagem laterais
 
         // CADASTRAR
         btnCadastrar.addActionListener(new ActionListener() { //evento vai rodar quando o botão for clicado
@@ -128,12 +128,12 @@ public class CadastroPessoa extends JFrame {  //classe principal da interface
         btnAlterar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                String indiceTxt = JOptionPane.showInputDialog("Índice para alterar:");
-                if (indiceTxt == null) return;
+                String indiceTxt = JOptionPane.showInputDialog("Índice para alterar:");//abre uma caixa de pergunta
+                if (indiceTxt == null) return; //Se o usuário clicar no botão Cancelar da janela, o programa para a execução desse método
 
-                int i = Integer.parseInt(indiceTxt);
+                int i = Integer.parseInt(indiceTxt); //Como o usuário digitou em uma caixa de texto recebe como  String, essa parte traduz string para Int
 
-                if (i >= 0 && i < pessoas.size()) {
+                if (i >= 0 && i < pessoas.size()) { //para garantir que o número digitado está dentro da lista
 
                     Pessoa p = pessoas.get(i);
 
@@ -142,7 +142,7 @@ public class CadastroPessoa extends JFrame {  //classe principal da interface
 
                     int novaIdade = Integer.parseInt(novaIdadeTxt);
 
-                    p.setNome(novoNome);
+                    p.setNome(novoNome); //pega o valor que o usuário digitou e coloca dentro da variável privada nome ou idade
                     p.setIdade(novaIdade);
 
                     JOptionPane.showMessageDialog(null, "Cadastro alterado!");
@@ -156,13 +156,13 @@ public class CadastroPessoa extends JFrame {  //classe principal da interface
         btnExcluir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                String indiceTxt = JOptionPane.showInputDialog("Índice para excluir:");
+                String indiceTxt = JOptionPane.showInputDialog("Índice para excluir:"); //abre uma caixa de pergunta
                 if (indiceTxt == null) return;
 
                 int i = Integer.parseInt(indiceTxt);
 
-                if (i >= 0 && i < pessoas.size()) {
-                    pessoas.remove(i);
+                if (i >= 0 && i < pessoas.size()) { //verificar se o número digitado é válido
+                    pessoas.remove(i); // remover i
                     JOptionPane.showMessageDialog(null, "Excluído!");
                 }
             }
@@ -172,11 +172,12 @@ public class CadastroPessoa extends JFrame {  //classe principal da interface
         btnSalvar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    PrintWriter pw = new PrintWriter(new FileWriter("pessoas.txt"));
-                    for (Pessoa p : pessoas) {
-                        pw.println(p.formatarParaArquivo());
+                    PrintWriter pw = new PrintWriter(new FileWriter("pessoas.txt")); //FileWriter cria ou abre o arquivo, PrintWriter permite usar println para escrever de forma organizada
+                    for (Pessoa p : pessoas) { //percorre a lista,
+
+                        pw.println(p.formatarParaArquivo()); //p é tratado como pessoa se  o objeto específico for um Aluno, vai usar a regra do Aluno (gravando nome, idade e matrícula), se for professor grava disciplina
                     }
-                    pw.close();
+                    pw.close(); //garante que os dados realmente sejam salvos
                     JOptionPane.showMessageDialog(null, "Arquivo salvo!");
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, "Erro ao salvar.");
@@ -186,8 +187,8 @@ public class CadastroPessoa extends JFrame {  //classe principal da interface
 
         // CONFIGURAÇÕES
         setSize(520, 460);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // finaliza quando é apertado x na janela
+        setVisible(true); //torna a janela visível
     }
 
     public static void main(String[] args) {
