@@ -21,7 +21,7 @@ public class CadastroPessoa extends JFrame {  //classe principal da interface
 
     public CadastroPessoa() { //O construtor é responsável por inicializar a interface gráfica, criando e configurando todos os componentes da janela
 
-        super("Cadastro de Pessoas"); //título
+        super("Registro Escolar"); //título
         setLayout(new FlowLayout()); //organizar
 //identificação btn -> jbutton, txt -> JTextField, rb ->JRadioButton, lbl->label
 
@@ -172,13 +172,16 @@ public class CadastroPessoa extends JFrame {  //classe principal da interface
         btnSalvar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    PrintWriter pw = new PrintWriter(new FileWriter("pessoas.txt")); //FileWriter cria ou abre o arquivo, PrintWriter permite usar println para escrever de forma organizada
-                    for (Pessoa p : pessoas) { //percorre a lista,
+                    BufferedWriter bw = new BufferedWriter(new FileWriter("pessoas.txt"));
+                    // FileWriter cria ou abre o arquivo
+                    // BufferedWriter adiciona o uso de buffer (melhor desempenho)
 
-                        pw.println(p.formatarParaArquivo()); //p é tratado como pessoa se  o objeto específico for um Aluno, vai usar a regra do Aluno (gravando nome, idade e matrícula), se for professor grava disciplina
+                    for (Pessoa p : pessoas) { // percorre a lista
+                        bw.write(p.formatarParaArquivo()); // escreve os dados da pessoa
+                        bw.newLine(); // pula para a próxima linha
                     }
-                    pw.close(); //garante que os dados realmente sejam salvos
-                    JOptionPane.showMessageDialog(null, "Arquivo salvo!");
+                    bw.close(); //garante que os dados realmente sejam salvos
+                    JOptionPane.showMessageDialog(null, "Registro Atualizado!");
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, "Erro ao salvar.");
                 }

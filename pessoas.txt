@@ -1,2 +1,2 @@
-Professor;Cibelle;21;Português
-Aluno;caio;16;32946
+Aluno;Cibelle ;21;0232649
+Professor;luana;28;
